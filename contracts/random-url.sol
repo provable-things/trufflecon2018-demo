@@ -5,7 +5,8 @@
 */
 
 pragma solidity ^0.4.11;
-import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+// import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+import "./oraclizeAPI.sol";
 
 
 // ORACLIZE_API FOLLOWS: FOR THE ACTUAL EXAMPLE CODE, LOOK AT THE BOTTOM!
@@ -122,45 +123,47 @@ contract usingOraclize__future is usingOraclize {
     
     mapping (bytes32 => bytes32) oraclize_proofShield_commitment;
 
-    byte constant proofType_Android_v2 = 0x40;
     byte constant proofShield = 0x0F;
     byte constant proofShield_Ledger = 0x0F;
 }
+/*
+ *
+ * ... RandomURLExample w/ Android & Proofshield (not stable, don't use in prod)...
+ * https://github.com/oraclize/ethereum-examples/blob/master/solidity/proofshield/proofShieldExample.sol
+ * NOTE: CAN be done on the javascript VM.
+ * Working callback seen here: http://app.oraclize.it/home/check_query?id=55b0decbf3036985e8a5b5248139c7899f7b5d0e570d95be3e3508c8fce903b8 (failed proof!)
+ * Working callback seen here: 
+ *
+ **/
+// pragma solidity ^0.4.25;
 
-// ... RandomURLExample w/ Android & Proofshield (not stable, don't use in prod)...
-// https://github.com/oraclize/ethereum-examples/blob/master/solidity/proofshield/proofShieldExample.sol
-// NOTE: CAN be done on the javascript VM.
-// Working callback seen here: http://app.oraclize.it/home/check_query?id=55b0decbf3036985e8a5b5248139c7899f7b5d0e570d95be3e3508c8fce903b8 (failed proof!)
-// Working callback seen here: 
+// import "./oraclizeAPI.sol";
+// // import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
 
-pragma solidity ^0.4.25;
+// contract RandomURLExample is usingOraclize__future {
 
-import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+//     uint public randomNumber;
+//     event LogResult(string);
 
-contract RandomURLExample is usingOraclize__future {
+//     constructor () payable public {
+//         oraclize_setProof(proofType_Android | proofShield_Ledger);
+//     }
 
-    uint public randomNumber;
-    event LogResult(string);
+//     function __callback(bytes32 _myid, string _result, bytes _proof) public {
+//         require (msg.sender == oraclize_cbAddress());
+//         if (oraclize_proofShield_proofVerify__returnCode(_myid, _result, _proof) == 0) {
+//             emit LogResult(_result);
+//         } else {
+//             // ... Proof verification has failed! ...
+//         }   
+//     }
 
-    constructor () payable public {
-        oraclize_setProof(proofType_Android | proofShield_Ledger);
-    }
-
-    function __callback(bytes32 _myid, string _result, bytes _proof) public {
-        require (msg.sender == oraclize_cbAddress());
-        if (oraclize_proofShield_proofVerify__returnCode(_myid, _result, _proof) == 0) {
-            emit LogResult(_result);
-        } else {
-            // ... Proof verification has failed! ...
-        }   
-    }
-
-    function getRandomNumber() payable public {
-        string memory query = "https://www.random.org/integers/?num=1&min=1&max=6&col=1&base=10&format=plain&rnd=new";
-        bytes32 queryId = oraclize_query("URL", query, 1000000);
-        oraclize_proofShield_commitment[queryId] = keccak256(sha256(query), proofType_Android_v2);
-    }
-}
+//     function getRandomNumber() payable public {
+//         string memory query = "https://www.random.org/integers/?num=1&min=1&max=6&col=1&base=10&format=plain&rnd=new";
+//         bytes32 queryId = oraclize_query("URL", query, 1000000);
+//         oraclize_proofShield_commitment[queryId] = keccak256(sha256(query), proofType_Android_v2);
+//     }
+// }
 /*
 
 ROPSTEN
@@ -173,14 +176,11 @@ edb2a7274d3171c7821487b9dc7ab762986f0a7d7e433cbebebd2e441c6b0596
 VM
 Query ID:
 cb84a5560e50775b04f711e70094548df3994ac6260014a225398a84f39f8278
-
-
-
 */
-
 pragma solidity ^0.4.25;
 
-import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+import "./oraclizeAPI.sol";
+// import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
 
 contract RandomURLExample is usingOraclize__future {
 
@@ -189,7 +189,7 @@ contract RandomURLExample is usingOraclize__future {
     bool public failed;
 
     constructor () payable public {
-        oraclize_setProof(proofType_Android_v2 | proofShield_Ledger);
+        oraclize_setProof(proofType_Android | proofShield_Ledger);
         getRandomNumber();
     }
 
@@ -208,6 +208,10 @@ contract RandomURLExample is usingOraclize__future {
     function getRandomNumber() payable public {
         string memory query = "https://www.random.org/integers/?num=1&min=1&max=6&col=1&base=10&format=plain&rnd=new";
         bytes32 queryId = oraclize_query("URL", query);
-        oraclize_proofShield_commitment[queryId] = keccak256(sha256(query), proofType_Android_v2);
+        oraclize_proofShield_commitment[queryId] = keccak256(sha256(query), proofType_Android);
+    }
+
+    function kill() public { // FIXME: Remove!
+        selfdestruct(msg.sender);
     }
 }

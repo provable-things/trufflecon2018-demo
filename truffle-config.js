@@ -1,4 +1,4 @@
-const {mnemonic, infuraKey} = require('./apikeys')
+const {mnemonic, infuraKey} = require('../infura/apikeys')
 const HDWalletProvider = require('truffle-hdwallet-provider')
   /**
    * Usage:
@@ -24,9 +24,9 @@ module.exports = {
     solc: {
       version: "0.4.25",
       settings: {
-       optimizer: {
-         enabled: true
-       }
+        optimizer: {
+          enabled: true
+        }
       }
     }
   }
