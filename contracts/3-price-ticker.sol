@@ -21,7 +21,7 @@ contract CryptoTicker is usingOraclize__future {
     }
 
     function getPrice() payable public {
-        string memory query = "json(https://api.kraken.com/0/public/Ticker?pair=ETHXBT).result.XETHXXBT.c.0";
+        string memory query = "json(https://www.bitstamp.net/api/v2/ticker/ethusd).last";
         bytes32 queryId = oraclize_query("URL", query);
         oraclize_proofShield_commitment[queryId] = keccak256(sha256(query), proofType_Android);
     }
