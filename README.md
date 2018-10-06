@@ -4,7 +4,7 @@
 
 ## :sparkles: __From Zero to Hero__
 
-In this repo you'll find three examples of how to leverage Oraclize in your smart-contracts, in a Truffle environment. The contracts included here increase in complexity of the Oraclize queries used, and once you've mastered the third you'll be officially be an __"Oraclize Hero"<sup>TM</sup>__ - Good Luck!
+In this repo you'll find three examples of how to leverage Oraclize in your smart-contracts, in a Truffle environment. The contracts included here increase in complexity of the Oraclize queries used, and once you've mastered the third you'll be officially be an _**"Oraclize Hero"<sup>TM</sup>**_ - Good Luck!
 
 &nbsp;
 

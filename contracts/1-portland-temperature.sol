@@ -1,11 +1,13 @@
 pragma solidity ^0.4.25;
 
-import "./oraclizeAPI.sol";
+// import "./oraclizeAPI.sol";
+import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+
 
 contract PortlandTemperature is usingOraclize {
     
     bool public jacketRequired;
-    uint public tempUnderWhichJacketRequired;
+    uint public tempUnderWhichJacketRequired = 15;
 
     constructor() payable public {
         oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
