@@ -12,7 +12,7 @@ contract RandomDataSource is usingOraclize {
     }
 
     function __callback(bytes32 _queryId, string _result, bytes _proof) public { 
-        require (msg.sender == oraclize_cbAddress());
+        require (msg.sender == oraclize_cbAddress(), "Caller is not an Oraclize address!");
         if (oraclize_randomDS_proofVerify__returnCode(_queryId, _result, _proof) == 0) {
             uint maxRange = 2 ** (8 * 7); 
             uint randomNum = uint(sha3(_result)) % maxRange;

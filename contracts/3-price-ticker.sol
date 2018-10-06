@@ -12,7 +12,7 @@ contract CryptoTicker is usingOraclize__future {
     }
 
     function __callback(bytes32 _queryId, string _result, bytes _proof) public {
-        require (msg.sender == oraclize_cbAddress());
+        require (msg.sender == oraclize_cbAddress(), "Caller is not an Oraclize address!");
         if (oraclize_proofShield_proofVerify__returnCode(_queryId, _result, _proof) == 0) {
             price = parseInt(_result);
         } else {

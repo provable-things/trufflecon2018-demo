@@ -13,7 +13,7 @@ contract PortlandTemperature is usingOraclize {
     }
 
     function __callback(bytes32 _queryId, string _result, bytes _proof) public { 
-        require (msg.sender == oraclize_cbAddress());
+        require (msg.sender == oraclize_cbAddress(), "Caller is not an Oraclize address!");
         jacketRequired = parseInt(_result) <= tempUnderWhichJacketRequired;
     }
     
