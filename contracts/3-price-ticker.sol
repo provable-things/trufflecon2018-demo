@@ -7,7 +7,7 @@ contract CryptoTicker is usingOraclize__future {
     uint public price;
 
     constructor () payable {
-        oraclize_setProof(proofType_Android | proofShield_Ledger);
+        oraclize_setProof(proofType_Android | proofShield);
         getPrice();
     }
 
