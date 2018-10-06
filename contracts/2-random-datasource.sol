@@ -1,22 +1,14 @@
-/*
- *
- * RandomDataSourceExample w/ Ledger Proof & Proofshield...
- * Note: CANNOT be done on the Javascript VM.
- * Note: Use kovan for super fast blocks (get the right ether though)
- *
- **/
 pragma solidity ^0.4.25;
 
 import "./oraclizeAPI.sol";
-// import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
 
-contract RandomDataSourceExample is usingOraclize {
+contract RandomDataSource is usingOraclize {
     
     uint public randomNumber;
-    event LogNewRandomNumber_uint(uint);
 
     constructor() payable public {
         oraclize_setProof(proofType_Ledger);
+        getRandomBytes();
     }
 
     function __callback(bytes32 _queryId, string _result, bytes _proof) public { 
@@ -25,16 +17,15 @@ contract RandomDataSourceExample is usingOraclize {
             uint maxRange = 2 ** (8 * 7); 
             uint randomNum = uint(sha3(_result)) % maxRange;
             randomNumber = randomNum;
-            emit LogNewRandomNumber_uint(randomNum);
         } else {
-            // ... Proof verification has failed! ...
+            // ... Proof verification has failed - handle as necessary...
         }
     }
     
-    function update() public payable {
-        uint N = 7;
+    function getRandomBytes() public payable {
+        uint n = 7;
         uint delay = 0;
         uint callbackGas = 200000;
-        bytes32 queryId = oraclize_newRandomDSQuery(delay, N, callbackGas);
+        oraclize_newRandomDSQuery(delay, n, callbackGas);
     }
 }

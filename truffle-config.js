@@ -1,4 +1,4 @@
-const {mnemonic, infuraKey} = require('../infura/apikeys')
+const {mnemonic, infuraKey} = require('./infura-key')
 const HDWalletProvider = require('truffle-hdwallet-provider')
   /**
    * Usage:
@@ -13,10 +13,10 @@ module.exports = {
       network_id: "*",
       websockets: true
     },
-    ropsten: {
-      provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/${infuraKey}`),
-      network_id: 3,
-      gas: 55e5, // Ropsten has a lower block limit than mainnet
+    kovan: {
+      provider: () => new HDWalletProvider(mnemonic, `https://kovan.infura.io/${infuraKey}`),
+      network_id: 42,
+      gas: 8e6, 
       gasPrice: 20e9
     }
   },
@@ -31,12 +31,3 @@ module.exports = {
     }
   }
 }
-// Another network with more advanced options...
-// advanced: {
-  // port: 8777,             // Custom port
-  // network_id: 1342,       // Custom network
-  // gas: 8500000,           // Gas sent with each transaction (default: ~6700000)
-  // gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
-  // from: <address>,        // Account to send txs from (default: accounts[0])
-  // websockets: true        // Enable EventEmitter interface for web3 (default: false)
-// },

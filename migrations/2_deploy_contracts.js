@@ -1,11 +1,8 @@
 const contracts = [
-  // artifacts.require("RandomURLExample.sol"),
-  // artifacts.require("RandomDataSourceExample.sol"),
-  artifacts.require("RandomComputationExample.sol")
+  artifacts.require("CryptoTicker.sol"),
+  artifacts.require("RandomDatasource.sol"),
+  artifacts.require("PortlandTemperature.sol")
 ]
 
-module.exports = deployer => {
-  // const gasPrice  = 2e10
-  // const amountETH = 1e17
+module.exports = deployer => 
   contracts.map(contract => deployer.deploy(contract))
-}
